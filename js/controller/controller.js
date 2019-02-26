@@ -16,10 +16,10 @@ class Controller {
     async init() {
         const movieData = await this.movieListModel
             .fetchUpcomingMovie(this.movieListModel.key);
-        console.log(movieData);
+        // console.log(movieData);
 
         const movieObjects = await this.getUpcomingMovieData(movieData);
-        console.log(movieObjects);
+        console.log("movie Item object",movieObjects);
 
         this.displayMovieList(movieObjects);
     }
@@ -52,17 +52,22 @@ class Controller {
             if(localStorage.getItem(movie.id)){
                 rating = localStorage.getItem(movie.id);
             }
-            console.log(movie.id+"value"+rating);
             const movieObj = new MovieItemModel(movie.id, movie.title, movie.poster_path, movie.overview, "",rating);
+            // console.log(movieObj);
             this.movieObjects.push(movieObj);
         }
         return this.movieObjects;
+    } //*** 
+
+    storeRating(movieId, rateValue){
+        this.movieItemModel.setRating(movieId, rateValue);
+        // this.movieListView.ratingListener(movieId, rateValue);
     }
 
-    storeRating(movieId, ratingValue){
-        this.movieItemModel.setRating(movieId, ratingValue);
-        this.movieListView.rateMovie(movieId, ratingValue);
-    }
+    // getRatingValue(movieId){
+    //     return this.movieItemModel.getRating(movieId);
+    // }
+
 
 
 }

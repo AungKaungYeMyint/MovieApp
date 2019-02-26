@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
   <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
   <link rel="stylesheet" href="css/style.css" />
 </head>
 
@@ -16,7 +16,7 @@
     <nav class="indigo">
       <div class="nav-wrapper">
         <ul class="left hide-on-med-and-down">
-          <li><a id="home" href="#">Home</a></li>
+          <li><a href="#">Home</a></li>
           <li style="display:none;"><a href="#" id="movie-name">Movie Name</a></li>
         </ul>
       </div>
@@ -43,7 +43,7 @@
             <i class="material-icons">add</i>
           </a>
         </div>
-        <div class="star-wrapper" id="{{this.rateid}}">
+        <div class="star-wrapper" id="{{this.rateid}}" data-block="{{ratevalue}}">
           <i class="far fa-star" id="{{empty_star1}}_1" data-value="1"></i>
           <i class="far fa-star" id="{{empty_star2}}_2" data-value="2"></i>
           <i class="far fa-star" id="{{empty_star3}}_3" data-value="3"></i>
@@ -52,7 +52,6 @@
         </div>
         <div class="card-content">
           <p>{{this.overview}}</p>
-
         </div>
       </div>
     </div>

@@ -6,10 +6,6 @@ body{
     background: rgba(000,000,000,0.5);
 }
 
-.favourite {
-    z-index: 2;
-}
-
 @media screen and (min-width:992px){
     .card .card-content p {
         min-height: 135px;
