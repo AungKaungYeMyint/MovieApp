@@ -51,30 +51,11 @@ class Movie extends APIDataModel {
 
     setRating(movieId, rateValue) {
         localStorage.setItem(movieId, rateValue);
-        // console.log("in setRating_movieID", movieId);
-        // console.log("in setRating_rateValue", rateValue);
     }
-
-    // getRating(movieId) {
-    //     return localStorage.getItem(movieId);
-    // }
-
-    // allStorageValue() {
-
-    //     var values = [],
-    //         keys = Object.keys(localStorage),
-    //         i = keys.length;
-
-    //     while (i--) {
-    //         values.push(localStorage.getItem(keys[i]));
-    //     }
-
-    //     return values;
-    // } // localstorage value
 
     allStorage() {
 
-        var archive = {}, // Notice change here
+        var archive = {},
             keys = Object.keys(localStorage),
             i = keys.length;
 

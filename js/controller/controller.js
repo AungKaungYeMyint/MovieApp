@@ -22,7 +22,7 @@ class Controller {
         console.log("movie Item object", movieObjects);
 
         this.displayMovieList(movieObjects);
-        this.movieListView.rateMovie();
+        this.movieListView.changeStar();
     }
 
     async displayDetail(id) {

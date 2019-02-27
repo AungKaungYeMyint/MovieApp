@@ -23,10 +23,8 @@ class MovieListView {
         const ratingValue = targetEle.dataset.value;
         const targetMovieId = targetEle.parentNode.id;
         if (targetEle && targetEle.parentNode.classList.contains('star-wrapper')) {
-            // console.log("rating star",ratingValue);
-            // console.log("rating star movieid",targetMovieId);
             this.controller.storeRating(targetMovieId, ratingValue);
-            this.rateMovie(event);
+            this.changeStar();
         }
     }
 
@@ -58,48 +56,28 @@ class MovieListView {
         document.documentElement.scrollTop = 0;
         this.viewport.innerHTML = "";
         for (let template of templates) {
-            // console.log(template);
-            // this.rateMovie();
             this.viewport.innerHTML += template;
         }
     } // movie list render
 
-    // findString(string, array){
-    //     console.log(string);
-    //     if(array.indexOf(string)){
-    //         return array.indexOf(string);
-    //     }
-    // }
-
-    rateMovie() {
+    changeStar() {
         let array = this.controller.getLocalData();
-        console.log(array);
-        for(let i in array){
-            console.log("index : ", i);
-            console.log("value : ",array[i]);
-            for(let j = 1; j <= array[i]; j++){
+
+        for (let i in array) {
+            for (let j = 1; j <= array[i]; j++) {
+                for (let k = 1; k <= 5; k++) {
+                    let fillStar = document.getElementById(i + "_" + k);
+                    fillStar.className = "far fa-star";
+                }
+            }
+        }
+        for (let i in array) {
+            for (let j = 1; j <= array[i]; j++) {
                 let fillStar = document.getElementById(i + "_" + j);
                 fillStar.className = "fas fa-star";
             }
-            // console.log("target : ",event.target);
-            // let targetEle = event.target;
-            // console.log(targetEle.className);
-            // if(targetEle.className == 'far fa-star'){
-            //     targetEle.className = "fas fa-star";
-            // }else{
-            //     targetEle.className = "far fa-star";
-            // }
-            
-            // this.ratingListener(event);
         }
     }
-
-    // if(fillStar.childNodes.classList.contains("far fa-star")){
-    //     fillStar.className = "fas fa-star";
-    // }else{
-    //     fillStar.className = "far fa-star";
-    // }
-
 }
 
 export default MovieListView;
