@@ -53,21 +53,44 @@ class Movie extends APIDataModel {
         localStorage.setItem(movieId, rateValue);
     }
 
-    allStorage() {
+    setFavourite(movieId, favouriteValue) {
+        localStorage.setItem(movieId, favouriteValue);
+    }
+
+    removeFavourite(movieId){
+        localStorage.removeItem(movieId);
+    }
+
+    favouriteStorage() {
 
         var archive = {},
             keys = Object.keys(localStorage),
             i = keys.length;
 
         while (i--) {
-            archive[keys[i]] = localStorage.getItem(keys[i]);
+            let fav = keys[i].slice(7);
+            // console.log("kk : ", kk);
+            if (fav === "favourite") {
+                archive[keys[i]] = localStorage.getItem(keys[i]);
+            }
         }
 
         return archive;
     }
 
+    ratingStorage() {
 
+        var archive = {}, // Notice change here
+            keys = Object.keys(localStorage),
+            i = keys.length;
 
+        while (i--) {
+            if ((keys[i].length == 6)) {
+                archive[keys[i]] = localStorage.getItem(keys[i]);
+            }
+        }
+        return archive;
+    }
 }
 
 export default Movie;

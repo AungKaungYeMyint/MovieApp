@@ -14,6 +14,7 @@ class Controller {
 
     }
     async init() {
+
         const movieData = await this.movieListModel
             .fetchUpcomingMovie(this.movieListModel.key);
         // console.log(movieData);
@@ -22,7 +23,8 @@ class Controller {
         console.log("movie Item object", movieObjects);
 
         this.displayMovieList(movieObjects);
-        this.movieListView.changeStar();
+        this.changeStar();
+        this.changeFavourite(movieData);
     }
 
     async displayDetail(id) {
@@ -65,11 +67,64 @@ class Controller {
         // this.movieListView.rateMovie();
     }
 
-    getLocalData() {
-        const array = this.movieItemModel.allStorage();
+    storeFavourite(movieId, favouriteValue) {
+        this.movieItemModel.setFavourite(movieId, favouriteValue);
+    }
+
+    getRatingData() {
+        const array = this.movieItemModel.ratingStorage();
         return array;
     }
 
+    getFavouriteData() {
+        const array = this.movieItemModel.favouriteStorage();
+        return array;
+    }
+
+    changeStar() {
+        let array = this.getRatingData();
+        console.log("rating array : ", array);
+        for (let i in array) {
+            console.log("star array : ", array[i]);
+            for (let k = 1; k <= 5; k++) {
+                let fillStar = document.getElementById(i + "_" + k);
+                fillStar.className = "far fa-star";
+            }
+        }
+        for (let i in array) {
+            for (let j = 1; j <= array[i]; j++) {
+                let fillStar = document.getElementById(i + "_" + j);
+                fillStar.className = "fas fa-star";
+            }
+        }
+    }
+
+    changeFavourite(movieData) {
+        let array = this.getFavouriteData();
+        let movieFavourite = [];
+        console.log(movieData);
+        for (let movie of movieData) {
+            movieFavourite.push(movie.id);
+        }
+
+        console.log("movieFavourite : ", movieFavourite);
+
+        for (let movie in movieFavourite) {
+            for(let i in array){
+                let fillHeart = document.getElementById(i.slice(0, 6) + "_fav");
+            }
+            
+            // if(movie.includes(i)){
+            //     console.log("movie : ", movie);
+            //     // this.movieItemModel.setFavourite(movie)
+            // }
+        }
+
+        // if()
+        // fillHeart.className = "fas fa-heart";
+
+
+    }
 }
 
 export default Controller;

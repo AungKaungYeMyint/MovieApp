@@ -13,6 +13,7 @@ class MovieListView {
                 
         if(targetEle && targetEle.parentNode.classList.contains('list-view-button')){              
             this.controller.changeListView();
+            this.controller.changeStar();
         }
     }
 
