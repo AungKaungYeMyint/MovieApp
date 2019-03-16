@@ -2,11 +2,9 @@ class MovieListView {
     constructor(controller) {
         this.controller = controller;
         this.itemTemplate = document.getElementById("movie-info-template").innerHTML;
-        this.favouriteTemplate = document.getElementById("favourite-template").innerHTML;
         this.viewport = document.getElementById("viewport");
         this.viewport.addEventListener('click', (event) => this.detailViewBtnListener(event));
         this.viewport.addEventListener('click', (event) => this.ratingListener(event));
-        this.viewport.addEventListener('click', (event) => this.favouriteListener(event));
     }
 
     detailViewBtnListener(event) {
@@ -16,6 +14,10 @@ class MovieListView {
         if (targetEle && targetEle.parentNode.classList.contains('detail-view-button')) {
             const movieId = targetEle.parentNode.dataset.id;
             this.controller.displayDetail(movieId);
+        }else if(targetEle && targetEle.parentNode.classList.contains('favorite-button')){
+            const movieId = targetEle.parentNode.dataset.id;
+            console.log("favouriteMovieId",movieId);
+            this.controller.favouriteMovie(movieId);
         }
     }
 
@@ -29,23 +31,12 @@ class MovieListView {
         }
     }
 
-    favouriteListener(event){
-        const targetEle = event.target;
-        const heartValue = targetEle.dataset.value;
-        if(targetEle && targetEle.parentNode.classList.contains('heart-wrapper')){
-            // console.log("favourite thing : ", targetEle.dataset.block);
-            // console.log("fa movie id : ", targetEle.parentNode.id);
-            // this.controller.storeFavourite(targetEle.parentNode.id,heartValue);
-            this.controller.changeFavourite();
-        }
-    }
-
     getItemTemplate(object) {
         const result = (this.itemTemplate
             .replace("{{this.title}}", object.title)
             .replace("{{this.poster}}", `https://image.tmdb.org/t/p/w400/${object.poster}`)
             .replace("{{this.overview}}", this.getExcerptWords(object.overview))
-            .replace("{{this.id}}", object.id)
+            // .replace("{{this.id}}", object.id)
             .replace("{{this.rateid}}", object.id)
             .replace("{{ratevalue}}", object.rating)
             .replace("{{empty_star1}}", object.id)
@@ -53,9 +44,8 @@ class MovieListView {
             .replace("{{empty_star3}}", object.id)
             .replace("{{empty_star4}}", object.id)
             .replace("{{empty_star5}}", object.id)
-            .replace("{{favourite-template}}",this.favouriteTemplate)
-            .replace("{{heart.movie_id}}",object.id)
-            .replace("{{heart.id}}",object.id));
+            .replace("{{this.id}}", object.id)
+            .replace("{{this.favorite}}", object.isFavourite ? 'favorite' : 'unfavorite'));
         return result;
     }  // create movie templates to display movie lists
 

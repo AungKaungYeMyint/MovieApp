@@ -24,7 +24,6 @@ class Controller {
 
         this.displayMovieList(movieObjects);
         this.changeStar();
-        this.changeFavourite(movieData);
     }
 
     async displayDetail(id) {
@@ -37,10 +36,13 @@ class Controller {
 
     displayMovieList(movieObjects) {
         const templates = [];
-        for (const movieObj of movieObjects) {
+        for (let movieObj of movieObjects) {
+            movieObj.updateFavourite(this.movieListModel.favMovies);
+            // console.log("ff",this.movieListModel.favMovies);
             templates.push(this.movieListView.getItemTemplate(movieObj));
-        }
+            console.log("template : ", templates);
 
+        }
         this.movieListView.render(templates);
     }
 
@@ -52,11 +54,11 @@ class Controller {
         this.movieObjects = [];
         for (let movie of data) {
             let rating = 0;
+            const isFav = this.movieListModel.favMovies.includes(movie.id.toString());
             if (localStorage.getItem(movie.id)) {
                 rating = localStorage.getItem(movie.id);
             }
-            const movieObj = new MovieItemModel(movie.id, movie.title, movie.poster_path, movie.overview, "", rating);
-            // console.log(movieObj);
+            const movieObj = new MovieItemModel(movie.id, movie.title, movie.poster_path, movie.overview, "", rating, isFav);
             this.movieObjects.push(movieObj);
         }
         return this.movieObjects;
@@ -64,20 +66,10 @@ class Controller {
 
     storeRating(movieId, rateValue) {
         this.movieItemModel.setRating(movieId, rateValue);
-        // this.movieListView.rateMovie();
-    }
-
-    storeFavourite(movieId, favouriteValue) {
-        this.movieItemModel.setFavourite(movieId, favouriteValue);
     }
 
     getRatingData() {
         const array = this.movieItemModel.ratingStorage();
-        return array;
-    }
-
-    getFavouriteData() {
-        const array = this.movieItemModel.favouriteStorage();
         return array;
     }
 
@@ -99,32 +91,21 @@ class Controller {
         }
     }
 
-    changeFavourite(movieData) {
-        let array = this.getFavouriteData();
-        let movieFavourite = [];
-        console.log(movieData);
-        for (let movie of movieData) {
-            movieFavourite.push(movie.id);
+    favouriteMovie(id) {
+        const favMovies = this.movieListModel.favMovies;
+        console.log("favMovies : ",favMovies);
+        if (!favMovies.includes(id)) {
+            favMovies.push(id);
         }
-
-        console.log("movieFavourite : ", movieFavourite);
-
-        for (let movie in movieFavourite) {
-            for(let i in array){
-                let fillHeart = document.getElementById(i.slice(0, 6) + "_fav");
-            }
-            
-            // if(movie.includes(i)){
-            //     console.log("movie : ", movie);
-            //     // this.movieItemModel.setFavourite(movie)
-            // }
+        else {
+            favMovies.splice(favMovies.indexOf(id), 1);
         }
+        this.movieListModel.favMovies = favMovies;
 
-        // if()
-        // fillHeart.className = "fas fa-heart";
-
-
+        this.displayMovieList(this.movieObjects);
+        this.changeStar();
     }
+
 }
 
 export default Controller;

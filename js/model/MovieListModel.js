@@ -13,8 +13,18 @@ class MovieListModel extends APIDataModel {
         return jsonData.results;
     }
 
-   
-    
+    get favMovies() {
+        const winners = localStorage.getItem("favouriteMovies");
+        if (winners !== null) {
+            return JSON.parse(winners);
+        }
+
+        return [];
+    }
+    set favMovies(value) {
+        const stringifyValue = JSON.stringify(value);
+        localStorage.setItem('favouriteMovies', stringifyValue);
+    }
 }
 
 export default MovieListModel;

@@ -1,7 +1,7 @@
 import APIDataModel from "./APIModel.js";
 
 class Movie extends APIDataModel {
-    constructor(id, title, poster, overview, link, rating) {
+    constructor(id, title, poster, overview, link, rating, isFav) {
         super();
         this.id = id;
         this.title = title;
@@ -9,6 +9,7 @@ class Movie extends APIDataModel {
         this.overview = overview;
         this.link = link;
         this.rating = rating;
+        this.isFavourite = isFav;
     }
 
 
@@ -53,31 +54,6 @@ class Movie extends APIDataModel {
         localStorage.setItem(movieId, rateValue);
     }
 
-    setFavourite(movieId, favouriteValue) {
-        localStorage.setItem(movieId, favouriteValue);
-    }
-
-    removeFavourite(movieId){
-        localStorage.removeItem(movieId);
-    }
-
-    favouriteStorage() {
-
-        var archive = {},
-            keys = Object.keys(localStorage),
-            i = keys.length;
-
-        while (i--) {
-            let fav = keys[i].slice(7);
-            // console.log("kk : ", kk);
-            if (fav === "favourite") {
-                archive[keys[i]] = localStorage.getItem(keys[i]);
-            }
-        }
-
-        return archive;
-    }
-
     ratingStorage() {
 
         var archive = {}, // Notice change here
@@ -90,6 +66,11 @@ class Movie extends APIDataModel {
             }
         }
         return archive;
+    }
+
+    updateFavourite(favList){
+        this.isFavourite = favList.includes(this.id.toString());
+        console.log("updateFavourite : ",this.isFavourite);
     }
 }
 

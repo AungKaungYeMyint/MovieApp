@@ -6,6 +6,22 @@ body{
     background: rgba(000,000,000,0.5);
 }
 
+.favorite-button.favorite{
+    color:red;
+}
+
+.favorite-button{
+    color:#fff;    
+    position: absolute;
+    top: 10px;
+    z-index: 9;
+    left: 10px;
+}
+
+.favorite-button i{
+    font-size:3em;    
+}
+
 @media screen and (min-width:992px){
     .card .card-content p {
         min-height: 135px;
